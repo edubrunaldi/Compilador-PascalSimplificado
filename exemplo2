@@ -1,0 +1,7 @@
+program lalg;
+{ outro teste aqui}
+var a, minha_variavel: integer;
+begin
+{teste sem fechar o comentario
+read(a, @, 1.a23);
+end.

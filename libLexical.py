@@ -77,6 +77,7 @@ def findTokens(parser_code):
     :param parser_code:
     :return: lista de tuplas de 2, contendo (cadeia, token)
     '''
+    error = False # retorna se ouve algum erro ou nao
     list_parser_token =[]
     pivo_list = 0
     while pivo_list < len(parser_code):
@@ -105,7 +106,8 @@ def findTokens(parser_code):
                 list_parser_token.append((cadeia, cadeia))
             else:
                 if len(cadeia) > 25:
-                    list_parser_token.append((cadeia, "ID Muito Longo"))                
+                    list_parser_token.append((cadeia, "ID Muito Longo"))
+                    error = True
                 else:
                     list_parser_token.append((cadeia, "ID"))
 
@@ -121,10 +123,12 @@ def findTokens(parser_code):
             else:
                 if re.match(regexTags, cadeia) is not None:
                     list_parser_token.append((cadeia, "Nao fechada"))
+                    error = True
                 else:
                     list_parser_token.append((cadeia, cadeia))
         else:
             list_parser_token.append((cadeia, "Simbulo nao pertence a linguagem"))
+            error = True
         pivo_list += 1
 
-    return list_parser_token
+    return list_parser_token, error

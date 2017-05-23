@@ -1,0 +1,4 @@
+<programa> ::= [program] [ident] [;] <corpo>
+<corpo> ::= <dc> begin <comandos> end 
+<dc> ::= <dc_c> <dc_v> <dc_p>
+<dc_c> ::= [const_ident] [=] <numero> [;] <dc_c>

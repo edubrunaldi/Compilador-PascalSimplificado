@@ -26,5 +26,8 @@ def printTable(cadeia_token):
 if __name__ == '__main__':
     code = sys.stdin.read()
     parser_code = doParser(code)
-    cadeia_token = findTokens(parser_code)
+    #print(code)
+    cadeia_token, error = findTokens(parser_code)
     printTable(cadeia_token)
+    if not error:
+        print(cadeia_token)
