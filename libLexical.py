@@ -93,23 +93,23 @@ def findTokens(parser_code):
 
    
             if re.match(regexInt, cadeia):
-                list_parser_token.append((cadeia, "Numero inteiro"))
+                list_parser_token.append((cadeia, "numero_int"))
             elif re.match(regexReal, cadeia):
-                list_parser_token.append((cadeia, "Numero real"))
+                list_parser_token.append((cadeia, "numero_real"))
             elif re.match(regexIntErr, cadeia):
-                list_parser_token.append((cadeia, "Numero inteiro incorreto"))
+                list_parser_token.append((cadeia, "numero_int incorreto"))
             elif re.match(regexRealErr, cadeia):
-                list_parser_token.append((cadeia, "Numero real incorreto"))
+                list_parser_token.append((cadeia, "numero_real incorreto"))
 
         elif re.match(regexAlnum, cadeia):
             if cadeia in reservedWords:
                 list_parser_token.append((cadeia, cadeia))
             else:
                 if len(cadeia) > 25:
-                    list_parser_token.append((cadeia, "ID Muito Longo"))
+                    list_parser_token.append((cadeia, "ident muito Longo"))
                     error = True
                 else:
-                    list_parser_token.append((cadeia, "ID"))
+                    list_parser_token.append((cadeia, "ident"))
 
         elif cadeia in simbulos:
             regexTags = re.compile("\{|\(")
