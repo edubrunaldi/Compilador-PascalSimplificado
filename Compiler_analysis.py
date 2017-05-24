@@ -1,5 +1,6 @@
 import sys
 from libLexical import *
+from libSyntax import do_syntax
 
 def printTable(cadeia_token):
     print('|--------------------------------------|--------------------------------------|')
@@ -28,6 +29,9 @@ if __name__ == '__main__':
     parser_code = doParser(code)
     #print(code)
     cadeia_token, error = findTokens(parser_code)
-    printTable(cadeia_token)
-    if not error:
-        print(cadeia_token)
+    #printTable(cadeia_token)
+    if error:
+        print('erro na analise lexica, concertar essa parte primeiro!')
+        exit(0)
+    do_syntax(cadeia_token)
+    
