@@ -11,7 +11,7 @@ STACK_MAX_DEPTH = 2000
 SYNTAX_RESULT = []
 
 def grammar_scanner():
-	fp = open('grammar.ds', 'r')
+	fp = open('gramatica_pascal.ds', 'r')
 	grammar_lines = fp.readlines()
 	fp.close()
 	for each_line in grammar_lines:
@@ -31,7 +31,7 @@ def grammar_scanner():
 			if bracket == '': 
 			
 				if each_line[i] == '[':
-					bracket = '['
+					bracket = ']'
 				elif each_line[i] == '<':
 					bracket = '>'
 
@@ -236,11 +236,11 @@ def reestruture_code(code):
 
 
 def do_syntax(code):
-	#global GRAMMAR, NONTERMINAL, TERMINAL, TOKEN_SEQUENCE, SYNTAX_RESULT
-	#grammar_scanner()
-	#getFirst()
-	#getFollow()
-	#get_parsing_table()
+	global GRAMMAR, NONTERMINAL, TERMINAL, TOKEN_SEQUENCE, SYNTAX_RESULT
+	grammar_scanner()
+	getFirst()
+	getFollow()
+	get_parsing_table()
 	TOKEN_SEQUENCE = reestruture_code(code)
 	print(TOKEN_SEQUENCE)
 	#syntax_parse()

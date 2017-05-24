@@ -26,15 +26,15 @@ dc_v> ::= [Lambda]
 <mais_ident> ::= [Lambda]
 <pfalsa> ::= [else] <cmd>
 <pfalsa> ::= [Lambda]
-<commandos> ::= <cmd> [;] <commandos>
-<commandos> ::= [Lambda]
+<comandos> ::= <cmd> [;] <comandos>
+<comandos> ::= [Lambda]
 <cmd> ::= [read] [(] <variaveis> [)]
 <cmd> ::= [write] [(] <variaveis> [)]
 <cmd> ::= [while] [(] <condicao> [)] [do] <cmd>
 <cmd> ::= [if] <condicao> [then] <cmd> <pfalsa>
 <cmd> ::= [ident] [:=] <expressao>
 <cmd> ::= [ident] <lista_arg>
-<cmd> ::= [begin] <commandos> [end]
+<cmd> ::= [begin] <comandos> [end]
 <condicao> ::= <expressao> <relacao> <expressao>
 <relacao> ::= [=]
 <relacao> ::= [<>]
@@ -46,7 +46,7 @@ dc_v> ::= [Lambda]
 <op_un> ::= [+]
 <op_un> ::= [-]
 <op_un> ::= [Lambda]
-<outros_termos> ::= <op_ad> <termos> <outros_termos>
+<outros_termos> ::= <op_ad> <termo> <outros_termos>
 <outros_termos> ::= [Lambda]
 <op_ad> ::= [+]
 <op_ad> ::= [-]
