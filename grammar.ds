@@ -1,0 +1,50 @@
+<program> ::= <beginProgram>
+<beginProgram> ::= <header> <dclSec> <block> [.]
+<header> ::= [program] [ident] [;]
+<block> ::= [begin] <statements> [end]
+<declSec> ::= <typeDeclSec> <varDeclSec> <subProgramDecls>
+<typeDeclSec> ::= [[types] <typeDecls>]
+<typeDecls> ::= {<typeDecl>}+
+<typeDecl> ::= [id] <typeSpecification>
+<typeSpecification> ::= <arraySpecification> | <recordSpecification>
+<arraySpecification> ::= [array] <dataType> [lbra] [num] [rbra] [eol]
+<recordSpecification> ::= [record] <varDecls> [end] [eol]
+<varDeclSec> ::= {[variables] <varDecls>}*
+<varDecls> ::= {<varDecl>}+
+<varDecl> ::= <dataType><idList>[eol]
+<dataType> ::= [real] | [integer] | [id] | [string]
+<idList> ::= [id]{[com] [id]}*
+<subProgramDecls> ::= {<subProgramDecl>}*
+<subProgramDecl> ::= <procDecl> | <functionDecl>
+<procDecl> ::= <procHeader> <subProgramDeclSec> <block> [eol]
+<procHeader> ::= [procedure] [id][eol]
+<subProgramDeclSec> ::= <paramDeclSec><declSec>
+<paramDeclSec> ::= {[parameters] <paramDecls>}
+<paramDecls> ::= {<paramDecl>}+
+<paramDecl> ::= <dataType> [id] [eol] | [var] <dataType> [id] [eol]
+<functionDecl> ::= <functionHeader> <subProgramDeclSec> <functionBlock> [eol]
+<functionHeader> ::= [function] [id] [returns] <dataType> [eol]
+<functionBlock> ::= [begin] <statements> <returnStatement> [end]
+<statements> ::= {<statement> [eol]}+
+<statement> ::= {[read] | [write] <variable> 
+          | [set] <variable> [compare] <expression>
+          | [if] <condition> [then] <statements> <elseClause>
+          | [while] <condition> [do] <statements> [endwhile]
+          | [until] <condition> [do] <statements> [enduntil]
+          | [call] [id] <argList>}
+<elseClause> ::= [else] <statements> [endif]
+<returnStatement> ::= [return] [lbar]<condition> [rbar]
+<argList> ::= [lbar] <arguments> [rbar]
+<arguments> ::= <argument> {[com] <argument>}*
+<condition> ::= <compoundCondition> {[revbar] <compoundCondition>}*
+<compoundCondition> ::= <simpleCondition> {[and] <simpleCondition>}*
+<simpleCondition> ::= <expression> {<relOp> <expression>}*
+<expression> ::= <term> {<addOp> <term>}*
+<addOp> ::= [sum] | [sub]
+<term> ::= <unary> {<mulOp> <unary>}*
+<mulOp> ::= [mul] | [div]
+<unary> ::= {[sum] | [sub]} <factor>
+<factor> ::= {[not]}* {<variable><argList> | [num] | [str] | [lbar] <condition> [rbar]}
+<variable> ::= [id] {[lbra] <expression> [rbra]} {[dot] [id] {[lbra] <expression> [rbra]}}*
+<relOp> ::= [compare] | [not] | [higher] | [less] | [lequal] | [hequal]
+<argument> ::= <condition>
