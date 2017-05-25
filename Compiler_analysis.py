@@ -33,5 +33,7 @@ if __name__ == '__main__':
     if error:
         print('erro na analise lexica, concertar essa parte primeiro!')
         exit(0)
-    do_syntax(cadeia_token)
+    syntax_result = do_syntax(cadeia_token)
+    print('14- syntax result retornada: ')
+    print(syntax_result)
     

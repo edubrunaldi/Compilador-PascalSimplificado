@@ -11,7 +11,7 @@ STACK_MAX_DEPTH = 2000
 SYNTAX_RESULT = []
 
 def grammar_scanner():
-	fp = open('gramatica_pascal.ds', 'r')
+	fp = open('grammar.ds', 'r')
 	grammar_lines = fp.readlines()
 	fp.close()
 	for each_line in grammar_lines:
@@ -237,11 +237,19 @@ def reestruture_code(code):
 
 def do_syntax(code):
 	global GRAMMAR, NONTERMINAL, TERMINAL, TOKEN_SEQUENCE, SYNTAX_RESULT
+	print('1- scaniar gramatica')
 	grammar_scanner()
+	print('2- gramatica scaniada')
+	print('3- pegar first')
 	getFirst()
+	print('4- first pego \n 5- pegar follow')
 	getFollow()
+	print('6- follow pego \n 7- fazendo o parsing table')
 	get_parsing_table()
+	print('8- tabela pega \n 9- ajeitar os tokens')
 	TOKEN_SEQUENCE = reestruture_code(code)
 	print(TOKEN_SEQUENCE)
-	#syntax_parse()
-	#return SYNTAX_RESULT
+	print('10- tokens ajeitados \n 11- fazer a syntax')
+	syntax_parse()
+	print('12- sintax feita \n 13- retornando o resultado da syntax')
+	return SYNTAX_RESULT
