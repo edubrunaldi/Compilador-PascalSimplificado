@@ -38,7 +38,10 @@
 <more_paramDecl> ::= <paramDecls>
 <more_paramDecl> ::= [Lambda]
 <paramDecl> ::= <dataType> [ident] [;]
-<paramDecl> ::= [var] <dataType> [ident] [;]
+<paramDecl> ::= [var] [ident] <more_idents> [:] <dataType> [;]
+<more_idents> ::= [,] [ident] <more_idents_2>
+<more_idents_2> ::= <more_idents>
+<more_idents_2> ::= [Lambda]
 <functionDecl> ::= <functionHeader> <subProgramDeclSec> <functionBlock> [;]
 <functionHeader> ::= [function] [ident] [returns] <dataType> [end]
 <functionBlock> ::= [begin] <statements> <returnStatement> [end]
@@ -92,7 +95,7 @@
 <variable> ::= [ident] <more_variable>
 <more_variable> ::= [[] <expression> []]
 <more_variable> ::= <more_variable_2>
-<more_variable_2> ::= [.] [ident] <more_variable_3>
+<more_variable_2> ::= [,] [ident] <more_variable_3>
 <more_variable_2> ::= [Lambda]
 <more_variable_3> ::= [[] <expression> []] <more_variable_2>
 <more_varaible_3> ::= <more_variable_2>

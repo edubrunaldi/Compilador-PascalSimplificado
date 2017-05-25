@@ -11,7 +11,7 @@ STACK_MAX_DEPTH = 2000
 SYNTAX_RESULT = []
 
 def grammar_scanner():
-	fp = open('grammar_pascal.ds', 'r')
+	fp = open('gramatica_pascal2.ds', 'r')
 	grammar_lines = fp.readlines()
 	fp.close()
 	for each_line in grammar_lines:
@@ -218,18 +218,18 @@ def syntax_parse():
 					if PARSING_TABLE[stack[stack_top]][TOKEN_SEQUENCE[token_curse]] == -1:
 						print('8')
 						#se o pop sair errado
-						SYNTAX_RESULT.append('error: [' + TOKEN_SEQUENCE[token_curse]+']: '+stack[stack_top] + '\n')
+						SYNTAX_RESULT.append('error: [ ' + TOKEN_SEQUENCE[token_curse]+']: '+stack[stack_top] + '\n')
 						stack_top = stack_top -1
 					else:
 						print('9')
-						SYNTAX_RESULT.append('error: ['+TOKEN_SEQUENCE[token_curse]+ 'para recuperar o simbolo de erro ignorado, o elemento de topo eh: '+stack[stack_top] + '\n')
+						SYNTAX_RESULT.append('error: [ '+TOKEN_SEQUENCE[token_curse]+ 'para recuperar o simbolo de erro ignorado, o elemento de topo eh: '+stack[stack_top] + '\n')
 						token_curse = token_curse +1
 
 			else:
 				#estado aceitavel, trocando o topo da pilha
 				print('10')
 				tmp_sequence = GRAMMAR[stack[stack_top]][PARSING_TABLE[stack[stack_top]][TOKEN_SEQUENCE[token_curse]]]
-				tmp_str = 'sucesso: [' + stack[stack_top]+ ']\t::=\t'
+				tmp_str = 'sucesso: [ ' + stack[stack_top]+ ']\t::=\t'
 				stack_top = stack_top -1
 				for x in xrange(0, len(tmp_sequence)):
 					tmp_str = tmp_str + '['+tmp_sequence[x]+']'

@@ -13,11 +13,14 @@
 <typeSpecification> ::= <recordSpecification>
 <arraySpecification> ::= [array] <dataType> [[] [numero_int] []] [;]
 <recordSpecification> ::= [record] <varDecls> [end] [;]
-<varDeclSec> ::= [variables] <varDecls>
+<varDeclSec> ::= [var] [ident] <more_idents> [:] <dataType> [;] <more_varDecl>
 <varDeclSec> ::= [Lambda]
-<varDecls> ::= <varDecl> <more_varDecl>
-<more_varDecl> ::= <varDecls>
+<more_idents> ::= [,] [ident] <more_idents2>
+<more_idents2> ::= <more_idents>
+<more_idents2> ::= [Lambda]
+<more_varDecl> ::= <varDeclSec>
 <more_varDecl> ::= [Lambda]
+<varDecls> ::= <varDecl> <more_varDecl>
 <varDecl> ::= <dataType> <idList> [;]
 <dataType> ::= [real]
 <dataType> ::= [integer]
