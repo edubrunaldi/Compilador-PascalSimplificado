@@ -11,7 +11,7 @@ STACK_MAX_DEPTH = 2000
 SYNTAX_RESULT = []
 
 def grammar_scanner():
-	fp = open('grammar.ds', 'r')
+	fp = open('grammar_pascal.ds', 'r')
 	grammar_lines = fp.readlines()
 	fp.close()
 	for each_line in grammar_lines:
@@ -182,40 +182,52 @@ def syntax_parse():
 	stack_top = 0
 	token_curse = 0
 	while(stack_top >= 0):
+		print('stack_top: ' +str(stack_top))
 		if(token_curse >= len(TOKEN_SEQUENCE)):
-			SYNTAX_RESULT.append('error: estrutura do programa nao esta completa, nao compilar')
+			print('1')
+			SYNTAX_RESULT.append('error: estrutura do programa nao esta completa, nao compilar\n')
 			break;
 		if stack_top > STACK_MAX_DEPTH:
 			print('Aviso: analise preditiva tentou empilhar mais de 2000 saidas')
 			exit(0)
 		if (stack[stack_top] in TERMINAL):
 			#Se for terminal
+			print('2')
 			if stack[stack_top] == TOKEN_SEQUENCE[token_curse]:
-				SYNTAX_RESULT.append('folha:[' + TOKEN_SEQUENCE[token_curse]+']')
+				print('2.1')
+				SYNTAX_RESULT.append('folha:[' + TOKEN_SEQUENCE[token_curse]+']\n')
 
 			else:
-				SYNTAX_RESULT.append('error: terminal inaceitavel: [' + TOKEN_SEQUENCE[token_curse]+']')
+				print('3')
+				SYNTAX_RESULT.append('error: terminal inaceitavel: [' + TOKEN_SEQUENCE[token_curse]+']\n')
 			stack_top = stack_top -1
 			token_curse = token_curse + 1
 
 		# se for Nao-terminal
 		else:
+			print('4')
 			if PARSING_TABLE[stack[stack_top]][TOKEN_SEQUENCE[token_curse]] < 0:
+				print('5')
 				if ['Lambda'] in GRAMMAR[stack[stack_top]]:
-					tmp_str = 'sucesso: [' + stack[stack_top]+']\t::=\t[Lambda]'
+					print('6')
+					tmp_str = 'sucesso: [' + stack[stack_top]+']\t::=\t[Lambda]\n'
 					SYNTAX_RESULT.append(tmp_str)
 					stack_top = stack_top -1
 				else:
+					print('7')
 					if PARSING_TABLE[stack[stack_top]][TOKEN_SEQUENCE[token_curse]] == -1:
+						print('8')
 						#se o pop sair errado
-						SYNTAX_RESULT.append('error: [' + TOKEN_SEQUENCE[token_curse]+']: '+stack[stack_top])
+						SYNTAX_RESULT.append('error: [' + TOKEN_SEQUENCE[token_curse]+']: '+stack[stack_top] + '\n')
 						stack_top = stack_top -1
 					else:
-						SYNTAX_RESULT.append('error: ['+TOKEN_SEQUENCE[token_curse]+ 'para recuperar o simbolo de erro ignorado, o elemento de topo eh: '+stack[stack_top])
+						print('9')
+						SYNTAX_RESULT.append('error: ['+TOKEN_SEQUENCE[token_curse]+ 'para recuperar o simbolo de erro ignorado, o elemento de topo eh: '+stack[stack_top] + '\n')
 						token_curse = token_curse +1
 
 			else:
 				#estado aceitavel, trocando o topo da pilha
+				print('10')
 				tmp_sequence = GRAMMAR[stack[stack_top]][PARSING_TABLE[stack[stack_top]][TOKEN_SEQUENCE[token_curse]]]
 				tmp_str = 'sucesso: [' + stack[stack_top]+ ']\t::=\t'
 				stack_top = stack_top -1
@@ -223,9 +235,10 @@ def syntax_parse():
 					tmp_str = tmp_str + '['+tmp_sequence[x]+']'
 					stack_top = stack_top +1
 					stack[stack_top] = tmp_sequence[len(tmp_sequence)-1-x]
+				tmp_str += '\n'
 				SYNTAX_RESULT.append(tmp_str)
 	if token_curse<(len(TOKEN_SEQUENCE)-1):
-		SYNTAX_RESULT.append('error: estrutura do programa nao esta completa, nao compilar!')
+		SYNTAX_RESULT.append('error: estrutura do programa nao esta completa, nao compilar! \n')
 
 
 def reestruture_code(code):
@@ -237,19 +250,11 @@ def reestruture_code(code):
 
 def do_syntax(code):
 	global GRAMMAR, NONTERMINAL, TERMINAL, TOKEN_SEQUENCE, SYNTAX_RESULT
-	print('1- scaniar gramatica')
 	grammar_scanner()
-	print('2- gramatica scaniada')
-	print('3- pegar first')
 	getFirst()
-	print('4- first pego \n 5- pegar follow')
 	getFollow()
-	print('6- follow pego \n 7- fazendo o parsing table')
 	get_parsing_table()
-	print('8- tabela pega \n 9- ajeitar os tokens')
 	TOKEN_SEQUENCE = reestruture_code(code)
 	print(TOKEN_SEQUENCE)
-	print('10- tokens ajeitados \n 11- fazer a syntax')
 	syntax_parse()
-	print('12- sintax feita \n 13- retornando o resultado da syntax')
 	return SYNTAX_RESULT

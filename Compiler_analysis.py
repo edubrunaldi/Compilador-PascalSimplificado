@@ -35,5 +35,6 @@ if __name__ == '__main__':
         exit(0)
     syntax_result = do_syntax(cadeia_token)
     print('14- syntax result retornada: ')
-    print(syntax_result)
+    for i in syntax_result:
+        print(i)
     

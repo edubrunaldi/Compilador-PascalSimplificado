@@ -2,5 +2,5 @@ program lalg;
 {outro teste}
 var a: integer;
 begin
-readd(a, 1);
+read(a, 1);
 end.
