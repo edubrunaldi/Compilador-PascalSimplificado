@@ -64,6 +64,7 @@ def grammar_scanner():
 
 		TERMINAL.append('$')
 
+
 def getFirst():
 	global GRAMMAR, NONTERMINAL, TERMINAL, FIRST
 
@@ -97,10 +98,79 @@ def getFirst():
 					FIRST[each_nonterminal].append('null')
 					stop = False
 
+	FIRST = {
+	'programa':['program'],
+	'corpo' : ['const', 'var', 'procedure', 'begin'],
+	'dc' : ['const', 'var', 'procedure', 'Lambda'],
+	'dc_c' : ['const', 'Lambda'],
+	'dc_v' : ['var', 'Lambda'],
+	'tipo_var' : ['real', 'integer'],
+	'variaveis' : ['ident'],
+	'mais_var' : [',', 'Lambda'],
+	'dc_p' : ['procedure', 'Lambda'],
+	'parametros' : ['(', 'Lambda'],
+	'lista_par' : ['ident'],
+	'mais_par' : [';', 'Lambda'],
+	'corpo_p' : ['var', 'begin'],
+	'dc_loc' : ['var', 'Lambda'],
+	'lista_arg' : ['(', 'Lambda'],
+	'argumentos' : ['ident'],
+	'mais_ident' : [';', 'Lambda'],
+	'pfalsa' : ['else', 'Lambda'],
+	'comandos' : ['read', 'write', 'while', 'if', 'for', 'ident', 'begin'],
+	'cmd': ['read', 'write', 'while', 'if', 'for', 'ident', 'begin'],
+	'condicao' : ['+', '-', 'ident', 'numero_int', 'numero_real', '('],
+	'relacao' : ['=', '<>', '>=', '<=', '>', '<'],
+	'expressao': ['+', '-', 'ident', 'numero_int', 'numero_real', '('],
+	'cmdlinha' : [':=', '(', ';', 'end'],
+	'op_un' : ['+', '-', 'Lambda'],
+	'outros_termos' : ['+', '-', 'Lambda'],
+	'op_ad' : ['+', '-'],
+	'termo' : ['+', '-', 'ident', 'numero_int', 'numero_real', '('],
+	'mais_fatores' : ['*', '/', 'Lambda'],
+	'op_mul' : ['*', '/'],
+	'fator' : ['ident', 'numero_int', 'numero_real', '('],
+	'numero' : ['numero_int', 'numero_real']
+	}
+
 
 def getFollow():
 	global GRAMMAR, NONTERMINAL, TERMINAL, FOLLOW
-
+	FOLLOW = {
+	'programa' : ['&'],
+	'corpo' : ['.'],
+	'dc' : ['begin'],
+	'dc_c' : ['var', 'procedure', 'begin'],
+	'dc_v' :['procedure', 'begin'],
+	'tipo_var' : [';', ')'],
+	'variaveis' : [':', ')'],
+	'mais_var' : [':', ')'],
+	'dc_p' : ['begin'],
+	'parametros' : [';'],
+	'lista_par' : [')'],
+	'mais_par' : [')'],
+	'corpo_p' : ['procedure', 'begin'],
+	'dc_loc' : ['begin'],
+	'lista_arg' : [';'],
+	'argumentos' : [')'],
+	'mais_ident' : [')'],
+	'pfalsa' : [';'],
+	'comandos' : ['end'],
+	'cmd' : [';'],
+	'condicao' : ['then', ')'],
+	'relacao' : ['+', '-', 'ident', 'numero_int', 'numero_real', ')'],
+	'expressao' : ['then', ')', '=', '<>', '>=', '<=', '<', '>', 'to', 'do', ';'],
+	'cmdlinha' : [';'],
+	'op_un' : ['ident', 'numero_int', 'numero_real', ')'],
+	'outros_termos' : ['then', ')', '=', '<>', '>=', '<=', '>', '<', 'to', 'do', ';'],
+	'op_ad' : ['+', '-', 'ident', 'numero_real', 'numero_int', ')'],
+	'termo' : ['then', ')',],
+	'mais_fatores' : ['then', ')', '=', '<>', '>=', '<=', '>', '<', 'to', 'do', ';', '+', '-'],
+	'op_mul' : ['ident', 'numero_real', 'numero_int', ')'],
+	'fator' : ['then', ')', '=', '<>', '>=', '<=', '>', '<', 'to', 'do', ';', '+', '-', '*', '/'],
+	'numero' : ['then', ')', '=', '<>', '>=', '<=', '>', '<', 'to', 'do', ';', '+', '-', '*', '/']
+	}
+	return
 	for each in TERMINAL:
 		FOLLOW[each] = []
 
@@ -108,15 +178,22 @@ def getFollow():
 		FOLLOW[each_nonterminal] = []
 
 	FOLLOW['programa'] = ['$']
-
+	#print('comeco')
 	for each_nonterminal in NONTERMINAL:
 		for each_sequence in GRAMMAR[each_nonterminal]:
-			for i in xrange(0, len(each_sequence)-1):
-				for each_next_marks_first in FIRST[each_sequence[i+1]]:
-					if (not each_next_marks_first in FOLLOW[each_sequence[i]]) and (not each_next_marks_first == 'null'):
-						FOLLOW[each_sequence[i]].append(each_next_marks_first)
+			pass
+	#		print(each_sequence)
+			# for i in xrange(0, len(each_sequence)-1):
+			# 	try:
+			# 		for each_next_marks_first in FIRST[each_sequence[i+1]]:
+			# 			if (not each_next_marks_first in FOLLOW[each_sequence[i]]) and (not each_next_marks_first == 'null'):
+			# 				FOLLOW[each_sequence[i]].append(each_next_marks_first)
+			# 	except Exception as  ee:
+			# 		print(each_sequence[i+1])
+			# 		print('i: '+ str(i))
+			# 		exit(1)
 
-
+	#exit()
 	stop = False
 	while(not stop):
 		stop = True
@@ -131,9 +208,10 @@ def getFollow():
 					if not 'null' in FIRST[each_sequence[i]]:
 						break;
 
+	
+
 def get_parsing_table():
 	global FIRST, FOLLOW, PARSING_TABLE
-
 	for each_nonterminal in NONTERMINAL:
 		PARSING_TABLE[each_nonterminal] = {}
 		for each_terminal in TERMINAL:
@@ -153,6 +231,7 @@ def get_parsing_table():
 						exit(0)
 					else:
 						PARSING_TABLE[each_nonterminal][each_marks_first] = i
+						print(i)
 				if not 'null' in FIRST[each_mark]:
 					break
 				else:
@@ -175,7 +254,7 @@ def get_parsing_table():
 
 def syntax_parse():
 	global SYNTAX_RESULT
-
+	#print(PARSING_TABLE)
 	SYNTAX_RESULT = []
 	stack = range(2100)
 	stack[0] = 'programa'
@@ -207,6 +286,7 @@ def syntax_parse():
 		else:
 			print('4')
 			if PARSING_TABLE[stack[stack_top]][TOKEN_SEQUENCE[token_curse]] < 0:
+				#print(PARSING_TABLE[stack[stack_top]][TOKEN_SEQUENCE[token_curse]])
 				print('5')
 				if ['Lambda'] in GRAMMAR[stack[stack_top]]:
 					print('6')
@@ -222,7 +302,9 @@ def syntax_parse():
 						stack_top = stack_top -1
 					else:
 						print('9')
-						print(GRAMMAR[stack[stack_top]])
+						#print(GRAMMAR[stack[stack_top]])
+						#print('stacktop')
+						#print(stack[stack_top])
 						SYNTAX_RESULT.append('error: [ '+TOKEN_SEQUENCE[token_curse]+ ' para recuperar o simbolo de erro ignorado, o elemento de topo eh: '+stack[stack_top] + '\n')
 						token_curse = token_curse +1
 
@@ -256,6 +338,6 @@ def do_syntax(code):
 	getFollow()
 	get_parsing_table()
 	TOKEN_SEQUENCE = reestruture_code(code)
-	print(TOKEN_SEQUENCE)
+	##print(TOKEN_SEQUENCE)
 	syntax_parse()
 	return SYNTAX_RESULT
