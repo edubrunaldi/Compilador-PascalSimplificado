@@ -5,7 +5,7 @@ simbulos = (':', '(', ')', ',', '.', ';', '{', '}', '<', '>', '<=', '>=', '<>', 
 
 #palavras reservadas da linguagem
 reservedWords = ('begin', 'const', 'do', 'else', 'end', 'for', 'if', 'integer', 'procedure', 'program',
-                 'read', 'real', 'then', 'var', 'while', 'write')
+                 'read', 'real', 'then', 'to', 'var', 'while', 'write')
 
 def doParser(code):
     '''
