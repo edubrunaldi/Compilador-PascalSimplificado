@@ -1,0 +1,73 @@
+<programa> ::= [program] [ident] [;] <corpo> [.]
+<corpo> ::= <dc> [begin] <comandos> [end]
+<dc> ::= <dc_c> <dc_v> <dc_p>
+<dc_c> ::= [const] [ident] [=] <numero> [;] <mais_dc_c>
+<dc_c> ::= [Lambda]
+<mais_dc_c> ::= <dc_c>
+<dc_v> ::= [var] <variaveis> [:] <tipo_var> [;] <mais_dc_v>
+<dc_v> ::= [Lambda]
+<mais_dc_v> ::= <dc_v>
+<tipo_var> ::= [real]
+<tipo_var> ::= [integer]
+<variaveis> ::= [ident] <mais_var>
+<mais_var> ::= [Lambda]
+<mais_var> ::= [,] <variaveis>
+<dc_p> ::= [procedure] [ident] <parametros> [;] <mais_dc_p>
+<dc_p> ::= [Lambda]
+<mais_dc_p> ::= <dc_p>
+<parametros> ::= [(] <lista_par> [)]
+<parametros> ::= [Lambda]
+<lista_par> ::= <variaveis> [:] <tipo_var> <mais_par>
+<mais_par> ::= [;] <lista_par>
+<mais_par> ::= [Lambda]
+<corpo_p> ::= <dc_loc> [begin] <comandos> [end] [;]
+<dc_loc> ::= <dc_v>
+<lista_arg> ::= [(] <argumentos> [)]
+<lista_arg> ::= [Lambda]
+<argumentos> ::= [ident] <mais_ident>
+<mais_ident> ::= [;] <argumentos>
+<mais_ident> ::= [Lambda]
+<pfalsa> ::= [else] [begin] <comandos> [end]
+<pfalsa> ::= [Lambda]
+<comandos> ::= <cmd> <mais_comandos>
+<comandos> ::= [;] <comandos>
+<comandos> ::= [Lambda]
+<cmd> ::= [read] [(] <variaveis> [)]
+<cmd> ::= [write] [(] <variaveis> [)]
+<cmd> ::= [while] [(] <condicao> [)] [do] <mais_cmd>
+<cmd> ::= [if] <condicao> [then] [begin] <comandos> [end] <pfalsa>
+<cmd> ::= [ident] <cmdlinha>
+<cmd> ::= [for] [ident] [:=] <expressao> [to] <expressao> [do] <mais_cmd>
+<cmd> ::= [begin] <comandos> [end]
+<mais_cmd> ::= <comandos>
+<condicao> ::= <expressao> <relacao> <expressao>
+<cmdlinha> ::= [:=] <expressao>
+<cmdlinha> ::= <lista_arg>
+<relacao> ::= [=]
+<relacao> ::= [<>]
+<relacao> ::= [>=]
+<relacao> ::= [<=]
+<relacao> ::= [>]
+<relacao> ::= [<]
+<expressao> ::= <termo> <outros_termos>
+<op_un> ::= [+]
+<op_un> ::= [-]
+<op_un> ::= [Lambda]
+<outros_termos> ::= <op_ad> <termo> <mais_outros_termos>
+<outros_termos> ::= [Lambda]
+<mais_outros_termos> ::= <outros_termos>
+<mais_outros_termos> ::= [Lambda]
+<op_ad> ::= [+]
+<op_ad> ::= [-]
+<termos> ::= <op_un> <fator> <mais_fatores>
+<mais_fatores> ::= [Lambda]
+<mais_fatores> ::= <op_mul> <fator> <mais_mais_fatores>
+<mais_mais_fatores> ::= <mais_fatores>
+<mais_mais_fatores> ::= [Lambda]
+<op_mul> ::= [*]
+<op_mul> ::= [/]
+<fator> ::= [ident]
+<fator> ::= <numero>
+<fator> ::= [(] <expressao> [)]
+<numero> ::= [numero_int]
+<numero> ::= [numero_real]
