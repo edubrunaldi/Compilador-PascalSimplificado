@@ -11,7 +11,7 @@ STACK_MAX_DEPTH = 2000
 SYNTAX_RESULT = []
 
 def grammar_scanner():
-	fp = open('gramatica_pascal2.ds', 'r')
+	fp = open('gramatica_LL1.ds', 'r')
 	grammar_lines = fp.readlines()
 	fp.close()
 	for each_line in grammar_lines:
@@ -195,11 +195,11 @@ def syntax_parse():
 			print('2')
 			if stack[stack_top] == TOKEN_SEQUENCE[token_curse]:
 				print('2.1')
-				SYNTAX_RESULT.append('folha:[' + TOKEN_SEQUENCE[token_curse]+']\n')
+				SYNTAX_RESULT.append('folha:[ ' + TOKEN_SEQUENCE[token_curse]+']\n')
 
 			else:
 				print('3')
-				SYNTAX_RESULT.append('error: terminal inaceitavel: [' + TOKEN_SEQUENCE[token_curse]+']\n')
+				SYNTAX_RESULT.append('error: terminal inaceitavel: [ ' + TOKEN_SEQUENCE[token_curse]+']\n')
 			stack_top = stack_top -1
 			token_curse = token_curse + 1
 
@@ -222,7 +222,8 @@ def syntax_parse():
 						stack_top = stack_top -1
 					else:
 						print('9')
-						SYNTAX_RESULT.append('error: [ '+TOKEN_SEQUENCE[token_curse]+ 'para recuperar o simbolo de erro ignorado, o elemento de topo eh: '+stack[stack_top] + '\n')
+						print(GRAMMAR[stack[stack_top]])
+						SYNTAX_RESULT.append('error: [ '+TOKEN_SEQUENCE[token_curse]+ ' para recuperar o simbolo de erro ignorado, o elemento de topo eh: '+stack[stack_top] + '\n')
 						token_curse = token_curse +1
 
 			else:
